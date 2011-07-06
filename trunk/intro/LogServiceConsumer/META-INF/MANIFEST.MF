@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-Version: 1.0.0
+Bundle-Name: LogServiceConsumer
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: hr.drezga.diplomski.logserviceconsumer
+Import-Package: hr.diplomski.drezga.logservice,
+ org.osgi.framework;version="[1.5.0,1.5.0]"
+Bundle-Activator: hr.diplomski.drezga.logserviceconsumer.LogServiceConsumerActivator
+
