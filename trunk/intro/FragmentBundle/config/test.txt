@@ -1,0 +1,1 @@
+This is the contents of the config/test.txt in the fragment bundle
