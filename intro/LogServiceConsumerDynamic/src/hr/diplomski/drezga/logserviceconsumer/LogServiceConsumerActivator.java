@@ -22,7 +22,7 @@ public class LogServiceConsumerActivator implements BundleActivator {
 		String filter = "(objectclass=" + ILogService.class.getName() + ")";
 
 		ctx.addServiceListener(lsLsnr, filter);
-		ServiceReference[] srl = ctx.getServiceReferences(null, filter);
+		ServiceReference<?>[] srl = ctx.getServiceReferences((String)null, filter);
 		for(int i = 0; srl != null && i < srl.length; i++)
 			lsLsnr.serviceChanged(new ServiceEvent(ServiceEvent.REGISTERED,srl[i])); 
 
