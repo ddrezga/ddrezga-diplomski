@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: FragmentBundle
+Bundle-SymbolicName: hr.drezga.diplomski.fragmentbundle
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: hr.drezga.diplomski.hostbundle;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
