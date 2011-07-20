@@ -4,6 +4,5 @@ Bundle-Name: LogServiceConsumerDynamic
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: hr.drezga.diplomski.logserviceconsumerDynamic
 Import-Package: hr.diplomski.drezga.logservice,
- org.osgi.framework;version="[1.5.0,1.5.0]"
+ org.osgi.framework;version="1.6.0"
 Bundle-Activator: hr.diplomski.drezga.logserviceconsumer.LogServiceConsumerActivator
-
