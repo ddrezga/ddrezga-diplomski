@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: HostBundle
+Bundle-SymbolicName: hr.drezga.diplomski.hostbundle
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: hr.drezga.diplomski.hostbundle.Activator
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.osgi.framework;version="1.6.0"
