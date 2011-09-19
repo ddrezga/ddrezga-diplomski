@@ -6,3 +6,4 @@ Bundle-SymbolicName: hr.drezga.diplomski.logserviceconsumer
 Import-Package: hr.diplomski.drezga.logservice,
  org.osgi.framework;version="1.6.0"
 Bundle-Activator: hr.diplomski.drezga.logserviceconsumer.LogServiceConsumerActivator
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
