@@ -1,9 +1,10 @@
 Manifest-Version: 1.0
 Bundle-Version: 1.0.0
-Bundle-Name: LogService
+Bundle-Name: LogServiceExtended
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: hr.drezga.diplomski.logserviceExtended
 Import-Package: org.osgi.framework;version="1.6.0",
  org.slf4j;version="1.6.1"
 Export-Package: hr.diplomski.drezga.logservice
 Register-Service: hr.diplomski.drezga.logservice.impl.LogServiceImpl=hr.diplomski.drezga.logservice.ILogService
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
