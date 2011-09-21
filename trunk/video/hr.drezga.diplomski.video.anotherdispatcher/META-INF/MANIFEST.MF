@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: hr.drezga.diplomski.video.anotherdispatcher
+Bundle-SymbolicName: hr.drezga.diplomski.video.anotherdispatcher
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: hr.drezga.diplomski.video.core,
+ org.apache.commons.logging;version="1.1.1",
+ org.osgi.framework;version="1.5.0",
+ org.springframework.asm;version="3.0.5.RELEASE",
+ org.springframework.beans;version="3.0.5.RELEASE",
+ org.springframework.beans.factory;version="3.0.5.RELEASE",
+ org.springframework.core;version="3.0.5.RELEASE",
+ org.springframework.osgi;version="1.2.1",
+ org.springframework.osgi.context;version="1.2.1",
+ org.springframework.osgi.service.importer;version="1.2.1"
