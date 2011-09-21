@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: hr.drezga.diplomski.video.core
+Bundle-SymbolicName: hr.drezga.diplomski.video.core
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: hr.drezga.diplomski.video.core
