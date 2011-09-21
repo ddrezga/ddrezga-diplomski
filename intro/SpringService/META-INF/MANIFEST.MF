@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SpringService
+Bundle-SymbolicName: SpringService
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.osgi.framework;version="1.6.0",
+ org.springframework.asm;version="3.0.5.RELEASE",
+ org.springframework.beans;version="3.0.5.RELEASE",
+ org.springframework.expression;version="3.0.5.RELEASE",
+ org.springframework.osgi;version="1.2.1",
+ org.springframework.osgi.config;version="1.2.1"
+Export-Package: hr.drezga.diplomski.springservice
