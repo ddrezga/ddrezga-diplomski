@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd">
+
+    <osgi:list id="producerList" interface="hr.drezga.diplomski.video.core.IVideoProducer" cardinality="0..N">    
+      	<osgi:listener ref ="serviceListener" bind-method="onBindProducer" unbind-method="onUnbindProducer" />      
+    </osgi:list> 
+
+    <osgi:list id="handlerList" interface="hr.drezga.diplomski.video.core.IVideoHandler" cardinality="0..N">    
+      	<osgi:listener ref ="serviceListener" bind-method="onBindHandler" unbind-method="onUnbindHandler" />      
+    </osgi:list> 
+
+</beans>
