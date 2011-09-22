@@ -5,5 +5,6 @@ public interface IVideoProducer {
 	public void startVideo();
 	public void stopVideo();
 	public boolean isRunning();
+	public void setDispatcher(IVideoDispatcher dispatcher);
 	
 }

@@ -14,10 +14,12 @@ import org.springframework.osgi.service.importer.ServiceReferenceProxy;
 
 import hr.drezga.diplomski.video.core.IVideoDispatcher;
 import hr.drezga.diplomski.video.core.IVideoHandler;
+import hr.drezga.diplomski.video.core.IVideoProducer;
 
 public class VideoDispatcherDefaultImpl implements IVideoDispatcher, BundleContextAware {
 
 	private final Map<String, List<IVideoHandler>> handlerMap = new ConcurrentHashMap<String, List<IVideoHandler>>();
+	private final Map<String, IVideoProducer> producerMap = new ConcurrentHashMap<String, IVideoProducer>();
 	private Map<String, DispatchRunnable> threadMap = new ConcurrentHashMap<String,DispatchRunnable>();
 	private BundleContext bc;
 
@@ -39,9 +41,7 @@ public class VideoDispatcherDefaultImpl implements IVideoDispatcher, BundleConte
 						for (IVideoHandler h : handlerMap.get(camera))
 							h.proccessFrame(img, t);
 					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				} catch (InterruptedException e) {}
 			}
 		}
 
@@ -70,6 +70,14 @@ public class VideoDispatcherDefaultImpl implements IVideoDispatcher, BundleConte
 		}
 	}
 
+	private IVideoHandler getHandlerFromService(ServiceReference sr) {
+		return (IVideoHandler)bc.getService((ServiceReference)sr);
+	}
+
+	private IVideoProducer getProducerFromService(ServiceReference sr) {
+		return (IVideoProducer)bc.getService((ServiceReference)sr);
+	}
+
 	public void registerHandler(ServiceReference sr) {
 		String s = sr.getProperty("camera").toString();
 		List<IVideoHandler> handlers = handlerMap.get(s);
@@ -78,32 +86,28 @@ public class VideoDispatcherDefaultImpl implements IVideoDispatcher, BundleConte
 			handlerMap.put(s, handlers);
 			DispatchRunnable dr = new DispatchRunnable(s);
 			threadMap.put(s, dr);
+			
 			dr.setRunning(true);
 			dr.start();
 		}
-		ServiceReference ref = null;
-		if (sr instanceof ServiceReferenceProxy)
-			ref = ((ServiceReferenceProxy)sr).getTargetServiceReference();
-		else
-			ref = sr;
+
+		ServiceReference ref = (sr instanceof ServiceReferenceProxy)?((ServiceReferenceProxy)sr).getTargetServiceReference():sr;
 
 		handlers.add(getHandlerFromService(ref));
+		
+		IVideoProducer p = producerMap.get(s);
+		if (p!=null && !p.isRunning()) {
+			p.setDispatcher(this);
+			p.startVideo();
+		}
 	}	
-
-	private IVideoHandler getHandlerFromService(ServiceReference sr) {
-		return (IVideoHandler)bc.getService((ServiceReference)sr);
-	}
 
 	public void unregisterHandler(ServiceReference sr) {
 		String s = sr.getProperty("camera").toString();
 		List<IVideoHandler> handlers = handlerMap.get(s);
 		if (handlers != null) {
-			ServiceReference ref = null;
 
-			if (sr instanceof ServiceReferenceProxy)
-				ref = ((ServiceReferenceProxy)sr).getTargetServiceReference();
-			else
-				ref = sr;
+			ServiceReference ref = (sr instanceof ServiceReferenceProxy)?((ServiceReferenceProxy)sr).getTargetServiceReference():sr;
 
 			handlers.remove(getHandlerFromService(ref));
 		}
@@ -113,12 +117,37 @@ public class VideoDispatcherDefaultImpl implements IVideoDispatcher, BundleConte
 			dr.setRunning(false);
 			dr.interrupt();
 			threadMap.remove(s);
+			IVideoProducer p = producerMap.get(s);
+			if (p!=null && p.isRunning())
+				p.stopVideo();			
 		}
-
 	}
 
 	@Override
 	public void setBundleContext(BundleContext bc) {
 		this.bc = bc;
+	}
+
+	public void registerProducer(ServiceReference sr) {
+		String s = sr.getProperty("camera").toString();
+		ServiceReference ref = (sr instanceof ServiceReferenceProxy)?((ServiceReferenceProxy)sr).getTargetServiceReference():sr;
+		IVideoProducer p = getProducerFromService(ref);
+		producerMap.put(s, getProducerFromService(ref));
+		p.setDispatcher(this);
+		if (handlerMap.get(s) != null)
+			p.startVideo();
+	}
+
+	public void unregisterProducer(ServiceReference sr) {
+		String s = sr.getProperty("camera").toString();
+		ServiceReference ref = (sr instanceof ServiceReferenceProxy)?((ServiceReferenceProxy)sr).getTargetServiceReference():sr;
+		IVideoProducer p = getProducerFromService(ref);
+		producerMap.remove(s);
+		p.setDispatcher(null);
+	}
+	
+	@Override
+	public List<String> getProducerList() {
+		return new ArrayList<String>(producerMap.keySet());
 	}
 }
