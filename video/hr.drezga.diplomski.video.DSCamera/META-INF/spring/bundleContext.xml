@@ -10,11 +10,12 @@
 		<property name="videoIndex" value="0" />
 		<property name="width" value="640" />
 		<property name="height" value="480" />
-<!-- 		<property name="dispatcher" ref="dispatcher" /> -->
 	</bean>
 	
-	<osgi:reference id="dispatcher" interface="hr.drezga.diplomski.video.core.IVideoDispatcher">
-		<osgi:listener ref="usbCamera" bind-method="regDispatch" unbind-method="unRegDispatch" />
-	</osgi:reference>
+	<osgi:service id="dispatcher" interface="hr.drezga.diplomski.video.core.IVideoProducer" ref="usbCamera">
+		<osgi:service-properties>
+			<entry key="camera" value="DS_CAMERA_#{ usbCamera.videoIndex }" />
+		</osgi:service-properties>
+	</osgi:service>
 	
 </beans>

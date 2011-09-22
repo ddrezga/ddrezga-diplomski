@@ -18,8 +18,9 @@ public class DSCameraImpl implements IVideoProducer {
 	private volatile boolean running;
 	private int height;
 	private int width;
+	private Thread videoThread;
 	private Integer videoIndex;
-	Thread videoThread;
+	
 	
 	DSCapture ds;
 	
@@ -45,8 +46,7 @@ public class DSCameraImpl implements IVideoProducer {
 						dispatcher.dispatch(ds.getImage(), "DS_CAMERA_" + videoIndex);
 					try {
 						Thread.sleep(40);
-					} catch (InterruptedException e) {
-					}
+					} catch (InterruptedException e) {}
 				}
 			}
 		};
@@ -77,19 +77,10 @@ public class DSCameraImpl implements IVideoProducer {
 		return running;
 	}
 
-	public void regDispatch(IVideoDispatcher dispatcher, Map properties) {
-		this.dispatcher = dispatcher;
-		startVideo();		
-	}
-	public void unRegDispatch(IVideoDispatcher dispatcher, Map properties) {
-		stopVideo();
-	}
-	
+	@Override
 	public void setDispatcher(IVideoDispatcher dispatcher) {
 		this.dispatcher = dispatcher;
-		if (dispatcher != null)
-			startVideo();
-		else
+		if (dispatcher == null)
 			stopVideo();
 	}
 	
@@ -103,6 +94,10 @@ public class DSCameraImpl implements IVideoProducer {
 
 	public void setVideoIndex(Integer videoIndex) {
 		this.videoIndex = videoIndex;
+	}
+
+	public Integer getVideoIndex() {
+		return videoIndex;
 	}
 
 }
