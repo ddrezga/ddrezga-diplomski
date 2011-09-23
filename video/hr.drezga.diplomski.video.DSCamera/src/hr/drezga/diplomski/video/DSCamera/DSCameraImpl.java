@@ -43,7 +43,7 @@ public class DSCameraImpl implements IVideoProducer {
 			@Override
 			public void run() {
 				while (running && dispatcher != null){
-						dispatcher.dispatch(ds.getImage(), "DS_CAMERA_" + videoIndex);
+						dispatcher.dispatch(ds.getImage(), "CAMERA_" + videoIndex);
 					try {
 						Thread.sleep(40);
 					} catch (InterruptedException e) {}
@@ -98,6 +98,11 @@ public class DSCameraImpl implements IVideoProducer {
 
 	public Integer getVideoIndex() {
 		return videoIndex;
+	}
+
+	@Override
+	public String getId() {
+		return "CAMERA_" + videoIndex;
 	}
 
 }
