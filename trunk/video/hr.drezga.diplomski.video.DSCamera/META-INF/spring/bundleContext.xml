@@ -7,14 +7,14 @@
 
 
 	<bean id="usbCamera" class="hr.drezga.diplomski.video.DSCamera.DSCameraImpl" destroy-method="stopVideo">
-		<property name="videoIndex" value="0" />
+		<property name="videoIndex" value="1" />
 		<property name="width" value="640" />
 		<property name="height" value="480" />
 	</bean>
 	
 	<osgi:service id="dispatcher" interface="hr.drezga.diplomski.video.core.IVideoProducer" ref="usbCamera">
 		<osgi:service-properties>
-			<entry key="camera" value="DS_CAMERA_#{ usbCamera.videoIndex }" />
+			<entry key="camera" value="CAMERA_#{ usbCamera.videoIndex }" />
 		</osgi:service-properties>
 	</osgi:service>
 	

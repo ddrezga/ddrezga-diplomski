@@ -35,8 +35,8 @@ import java.util.Map;
 import org.eclipse.swt.layout.FillLayout;
 import javax.swing.JPanel;
 
-public class View extends ViewPart implements BundleContextAware{
-	public View() {
+public class SimpleVideoView extends ViewPart implements BundleContextAware{
+	public SimpleVideoView() {
 	}
 	public static final String ID = "SimpleVideo.view";
 
@@ -77,7 +77,7 @@ public class View extends ViewPart implements BundleContextAware{
 		};
 		frame.add(panel, BorderLayout.CENTER);
 		Dictionary<String, String> props = new Hashtable<String, String>(); 
-		props.put("camera", "DS_CAMERA_0");
+		props.put("camera", "CAMERA_0");
 		sr = bc.registerService(IVideoHandler.class, videoHandler, props);	
 	}
 

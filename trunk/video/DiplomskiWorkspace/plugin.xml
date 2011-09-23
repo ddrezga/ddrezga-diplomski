@@ -14,9 +14,16 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="Simple video"
+            allowMultiple="false"
             class="org.eclipse.springframework.util.SpringExtensionFactory"
-            id="SimpleVideo.view">
+            id="Producers.view"
+            name="Producers">
+      </view>
+      <view
+            allowMultiple="false"
+            class="org.eclipse.springframework.util.SpringExtensionFactory"
+            id="Filters.view"
+            name="Filters">
       </view>
    </extension>
    <extension
@@ -24,9 +31,18 @@
       <perspectiveExtension
             targetID="DiplomskiWorkspace.perspective">
          <view
-               id="SimpleVideo.view"
+               closeable="false"
+               id="Producers.view"
+               minimized="false"
+               ratio="0.1"
                relationship="left"
                relative="org.eclipse.ui.editorss">
+         </view>
+         <view
+               id="Filters.view"
+               minimized="false"
+               relationship="bottom"
+               relative="Producers.view">
          </view>
       </perspectiveExtension>
    </extension>
@@ -42,6 +58,49 @@
             </command>
          </menu>
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:Producers.view">
+         <command
+               commandId="OpenVideo.command"
+               label="Open video"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false">
+                     <instanceof
+                           value="hr.drezga.diplomski.video.core.IVideoProducer">
+                     </instanceof>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.springframework.util.SpringExtensionFactory"
+            id="Video.view"
+            name="VideoView">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.springframework.util.SpringExtensionFactory"
+            id="OpenVideo.command"
+            name="OpenVideo">
+         <commandParameter
+               id="OpenVideo.command.element"
+               name="element"
+               optional="false"
+               values="org.eclipse.ui.internal.registry.ViewParameterValues">
+         </commandParameter>
+      </command>
    </extension>
 
 </plugin>

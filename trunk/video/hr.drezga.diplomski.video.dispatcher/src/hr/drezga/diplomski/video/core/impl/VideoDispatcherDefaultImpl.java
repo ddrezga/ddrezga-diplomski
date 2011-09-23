@@ -78,7 +78,7 @@ public class VideoDispatcherDefaultImpl implements IVideoDispatcher, BundleConte
 		return (IVideoProducer)bc.getService((ServiceReference)sr);
 	}
 
-	public void registerHandler(ServiceReference sr) {
+	public synchronized void registerHandler(ServiceReference sr) {
 		String s = sr.getProperty("camera").toString();
 		List<IVideoHandler> handlers = handlerMap.get(s);
 		if (handlers == null) {
@@ -102,7 +102,7 @@ public class VideoDispatcherDefaultImpl implements IVideoDispatcher, BundleConte
 		}
 	}	
 
-	public void unregisterHandler(ServiceReference sr) {
+	public synchronized void unregisterHandler(ServiceReference sr) {
 		String s = sr.getProperty("camera").toString();
 		List<IVideoHandler> handlers = handlerMap.get(s);
 		if (handlers != null) {
@@ -128,7 +128,7 @@ public class VideoDispatcherDefaultImpl implements IVideoDispatcher, BundleConte
 		this.bc = bc;
 	}
 
-	public void registerProducer(ServiceReference sr) {
+	public synchronized void registerProducer(ServiceReference sr) {
 		String s = sr.getProperty("camera").toString();
 		ServiceReference ref = (sr instanceof ServiceReferenceProxy)?((ServiceReferenceProxy)sr).getTargetServiceReference():sr;
 		IVideoProducer p = getProducerFromService(ref);
@@ -138,7 +138,7 @@ public class VideoDispatcherDefaultImpl implements IVideoDispatcher, BundleConte
 			p.startVideo();
 	}
 
-	public void unregisterProducer(ServiceReference sr) {
+	public synchronized void unregisterProducer(ServiceReference sr) {
 		String s = sr.getProperty("camera").toString();
 		ServiceReference ref = (sr instanceof ServiceReferenceProxy)?((ServiceReferenceProxy)sr).getTargetServiceReference():sr;
 		IVideoProducer p = getProducerFromService(ref);

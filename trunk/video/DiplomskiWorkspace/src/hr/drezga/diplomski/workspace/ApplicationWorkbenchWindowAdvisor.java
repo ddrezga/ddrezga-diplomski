@@ -9,7 +9,7 @@ import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
-
+	
 	public ApplicationWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
 		super(configurer);
 	}
@@ -21,8 +21,16 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
 	public void preWindowOpen() {
 		IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
-		configurer.setInitialSize(new Point(800, 600));
 		configurer.setShowCoolBar(false);
 		configurer.setShowStatusLine(false);
+	}
+	
+	@Override
+	public void postWindowCreate() {
+		super.postWindowCreate();
+		IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
+		Shell shell = configurer.getWindow().getShell();
+		shell.setMaximized(true);
+		shell.setMinimumSize(800, 600);	
 	}
 }
