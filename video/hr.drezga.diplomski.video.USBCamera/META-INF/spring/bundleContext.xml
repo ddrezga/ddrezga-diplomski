@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd">
+
+
+	<bean id="usbCamera" class="hr.drezga.diplomski.video.USBCamera.USBCameraImpl" destroy-method="stopVideo">
+		<property name="videoIndex" value="0" />
+		<property name="width" value="640" />
+		<property name="height" value="480" />
+	</bean>
+	
+	<osgi:service id="dispatcher" interface="hr.drezga.diplomski.video.core.IVideoProducer" ref="usbCamera">
+		<osgi:service-properties>
+			<entry key="camera" value="CAMERA_#{ usbCamera.videoIndex }" />
+		</osgi:service-properties>
+	</osgi:service>
+	
+</beans>
