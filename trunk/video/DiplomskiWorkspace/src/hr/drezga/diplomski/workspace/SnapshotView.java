@@ -10,6 +10,9 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Panel;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -20,6 +23,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IEditorInput;
@@ -33,9 +37,13 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.io.File;
+import java.io.IOException;
 
-public class VideoView extends EditorPart implements BundleContextAware {
-	public VideoView() {
+import javax.imageio.ImageIO;
+
+public class SnapshotView extends EditorPart implements BundleContextAware {
+	public SnapshotView() {
 	}
 
 	public static final String ID = "Snapshot.view"; //$NON-NLS-1$
@@ -45,10 +53,13 @@ public class VideoView extends EditorPart implements BundleContextAware {
 	private BundleContext bc;
 	private ServiceRegistration<IVideoHandler> sr;
 	private volatile int scaling = 1;
+	private volatile boolean takingSnapshot = false;
 	
 	IVideoHandler videoHandler = new IVideoHandler() {
 		@Override
 		public void proccessFrame(BufferedImage i, long timestamp) {
+			if (takingSnapshot)
+				return;
 			img = i;
 			getEditorSite().getWorkbenchWindow().getShell().getDisplay().asyncExec(new Runnable() {
 				@Override
@@ -75,6 +86,34 @@ public class VideoView extends EditorPart implements BundleContextAware {
 		ToolBar toolBar = new ToolBar(rootComposite, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		toolBar.setBounds(0, 0, 297, 474);
+		
+		ToolItem tltmSnapshot = new ToolItem(toolBar, SWT.NONE);
+		tltmSnapshot.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				takingSnapshot = true;
+				ColorModel cm = img.getColorModel();
+				boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+				WritableRaster raster = img.copyData(null);
+				BufferedImage saveImage = new BufferedImage(cm, raster, isAlphaPremultiplied, null);
+				FileDialog fd = new FileDialog(getEditorSite().getShell(), SWT.SAVE);
+				fd.setFilterExtensions(new String[]{"*.jpg"});
+				fd.setFileName(new Date().toString()+".jpg");
+				fd.setText("Save");
+				String path = fd.open();
+				if (path == null)
+					return;
+				try {
+					ImageIO.write(saveImage,"jpg", new File(path));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				takingSnapshot = false;
+			}
+		});
+		tltmSnapshot.setText("Snapshot");
+		
+		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
 		
 		final ToolItem tltmOriginal = new ToolItem(toolBar, SWT.RADIO);
 		tltmOriginal.addSelectionListener(new SelectionAdapter() {

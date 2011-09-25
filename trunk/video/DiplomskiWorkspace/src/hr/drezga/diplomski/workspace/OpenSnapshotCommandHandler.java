@@ -12,7 +12,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-public class OpenVideoCommandHandler extends AbstractHandler {
+public class OpenSnapshotCommandHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -20,7 +20,7 @@ public class OpenVideoCommandHandler extends AbstractHandler {
 		IVideoProducer video = (IVideoProducer) sel.getFirstElement();
 		
 		try {
-			HandlerUtil.getActiveSite(event).getPage().openEditor(new VideoEditorInput(video), "Video.view");
+			HandlerUtil.getActiveSite(event).getPage().openEditor(new VideoEditorInput(video), "Snapshot.view");
 		} catch (PartInitException e) {
 			e.printStackTrace();
 		}

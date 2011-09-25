@@ -28,9 +28,7 @@ import org.eclipse.swt.widgets.Menu;
 
 @SuppressWarnings({ "rawtypes", "unused", "unchecked" })
 public class ProducerView extends ViewPart implements BundleContextAware {
-	public ProducerView() {
-	}
-	public static final String ID = "hr.drezga.diplomski.workspace.ProducerView"; //$NON-NLS-1$
+	public static final String ID = "Producers.view";
 	private List<IVideoProducer> producers = new ArrayList<IVideoProducer>();
 	private BundleContext bc;
 	private Display d;

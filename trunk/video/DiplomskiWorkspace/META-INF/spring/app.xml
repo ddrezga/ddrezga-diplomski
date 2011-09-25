@@ -12,10 +12,16 @@
 	</bean>
 	
 	<bean id="DiplomskiWorkspace.perspective" class="hr.drezga.diplomski.workspace.Perspective" scope="prototype" />
-	<bean id="Video.view" class="hr.drezga.diplomski.workspace.VideoView" scope="prototype" />	
 	<bean id="Producers.view" class="hr.drezga.diplomski.workspace.ProducerView" />	
-	<bean id="Filters.view" class="hr.drezga.diplomski.workspace.FilterView" scope="prototype" />
 	
+	<bean id="Video.view" class="hr.drezga.diplomski.workspace.VideoView" scope="prototype" />	
 	<bean id="OpenVideo.command" class="hr.drezga.diplomski.workspace.OpenVideoCommandHandler" />
+
+	<bean id="Snapshot.view" class="hr.drezga.diplomski.workspace.SnapshotView" scope="prototype" />	
+	<bean id="OpenSnapshot.command" class="hr.drezga.diplomski.workspace.OpenSnapshotCommandHandler" />
+
+	<bean id="Filters.view" class="hr.drezga.diplomski.workspace.FilterView" />
+	<bean id="VideoFilter.view" class="hr.drezga.diplomski.workspace.VideoFilterView" scope="prototype" />	
+	<bean id="OpenVideoFilter.command" class="hr.drezga.diplomski.workspace.OpenVideoFilterCommandHandler" />
 
 </beans>

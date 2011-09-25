@@ -20,3 +20,5 @@ Import-Package: hr.drezga.diplomski.video.core,
  org.springframework.osgi.context;version="1.2.1",
  org.springframework.osgi.service;version="1.2.1",
  org.springframework.osgi.service.importer;version="1.2.1"
+Bundle-ClassPath: .,
+ swing2swt.jar
