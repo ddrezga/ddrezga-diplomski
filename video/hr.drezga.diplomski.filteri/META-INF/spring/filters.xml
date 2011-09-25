@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd">
+
+	<bean id="glowFilter" class="hr.drezga.diplomski.filteri.GenericFilter">
+		<property name="filter">
+			<bean class="com.jhlabs.image.GlowFilter">
+			</bean>
+		</property>
+	</bean>
+	<osgi:service id="glowFilterService" interface="hr.drezga.diplomski.video.core.IVideoFilter" ref="glowFilter">
+		<osgi:service-properties>
+			<entry key="name" value="GlowFilter"/>
+		</osgi:service-properties>
+	</osgi:service>
+
+	<bean id="grayScaleFilter" class="hr.drezga.diplomski.filteri.GenericFilter">
+		<property name="filter">
+			<bean class="com.jhlabs.image.GrayscaleFilter">
+			</bean>
+		</property>
+	</bean>
+	<osgi:service id="grayScaleFilterService" interface="hr.drezga.diplomski.video.core.IVideoFilter" ref="grayScaleFilter">
+		<osgi:service-properties>
+			<entry key="name" value="GrayScaleFilter"/>
+		</osgi:service-properties>
+	</osgi:service>
+
+	<bean id="mirrorFilter" class="hr.drezga.diplomski.filteri.GenericFilter">
+		<property name="filter">
+			<bean class="com.jhlabs.image.MirrorFilter">
+			</bean>
+		</property>
+	</bean>
+	<osgi:service id="mirrorFilterService" interface="hr.drezga.diplomski.video.core.IVideoFilter" ref="mirrorFilter">
+		<osgi:service-properties>
+			<entry key="name" value="MirrorFilter"/>
+		</osgi:service-properties>
+	</osgi:service>
+
+	<bean id="colorHalfToneFilter" class="hr.drezga.diplomski.filteri.GenericFilter">
+		<property name="filter">
+			<bean class="com.jhlabs.image.HalftoneFilter">
+			</bean>
+		</property>
+	</bean>
+	<osgi:service id="colorHalfToneFilterService" interface="hr.drezga.diplomski.video.core.IVideoFilter" ref="colorHalfToneFilter">
+		<osgi:service-properties>
+			<entry key="name" value="ColorHalfToneFilter"/>
+		</osgi:service-properties>
+	</osgi:service>
+
+	<bean id="bumpFilter" class="hr.drezga.diplomski.filteri.GenericFilter">
+		<property name="filter">
+			<bean class="com.jhlabs.image.BumpFilter">
+			</bean>
+		</property>
+	</bean>
+	<osgi:service id="bumpFilterService" interface="hr.drezga.diplomski.video.core.IVideoFilter" ref="bumpFilter">
+		<osgi:service-properties>
+			<entry key="name" value="BumpFilter"/>
+		</osgi:service-properties>
+	</osgi:service>
+
+	<bean id="invertFilter" class="hr.drezga.diplomski.filteri.GenericFilter">
+		<property name="filter">
+			<bean class="com.jhlabs.image.InvertFilter">
+			</bean>
+		</property>
+	</bean>
+	<osgi:service id="invertFilterService" interface="hr.drezga.diplomski.video.core.IVideoFilter" ref="invertFilter">
+		<osgi:service-properties>
+			<entry key="name" value="InvertFilter"/>
+		</osgi:service-properties>
+	</osgi:service>
+
+	<bean id="edgeFilter" class="hr.drezga.diplomski.filteri.GenericFilter">
+		<property name="filter">
+			<bean class="com.jhlabs.image.EdgeFilter">
+			</bean>
+		</property>
+	</bean>
+	<osgi:service id="edgeFilterService" interface="hr.drezga.diplomski.video.core.IVideoFilter" ref="edgeFilter">
+		<osgi:service-properties>
+			<entry key="name" value="edgeFilter"/>
+		</osgi:service-properties>
+	</osgi:service>
+</beans>
