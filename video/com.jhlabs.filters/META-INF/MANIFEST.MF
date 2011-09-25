@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: com.jhlabs.filters
+Bundle-SymbolicName: com.jhlabs.filters
+Bundle-Version: 1.0.0
+Export-Package: com.jhlabs.composite,
+ com.jhlabs.image,
+ com.jhlabs.math,
+ com.jhlabs.vecmath
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
