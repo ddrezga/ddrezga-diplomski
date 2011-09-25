@@ -10,6 +10,9 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Panel;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -20,6 +23,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.IEditorInput;
@@ -33,22 +37,37 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.io.File;
+import java.io.IOException;
 
-public class VideoView extends EditorPart implements BundleContextAware {
-	public VideoView() {
+import javax.imageio.ImageIO;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.jface.viewers.ListViewer;
+import swing2swt.layout.FlowLayout;
+import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.widgets.Text;
+
+public class VideoFilterView extends EditorPart implements BundleContextAware {
+	public VideoFilterView() {
 	}
 
-	public static final String ID = "Snapshot.view"; //$NON-NLS-1$
+	public static final String ID = "VideoFilter.view"; //$NON-NLS-1$
 
 	private BufferedImage img;
 	private Panel panel;
 	private BundleContext bc;
 	private ServiceRegistration<IVideoHandler> sr;
 	private volatile int scaling = 1;
+	private volatile boolean takingSnapshot = false;
 	
 	IVideoHandler videoHandler = new IVideoHandler() {
 		@Override
 		public void proccessFrame(BufferedImage i, long timestamp) {
+			if (takingSnapshot)
+				return;
 			img = i;
 			getEditorSite().getWorkbenchWindow().getShell().getDisplay().asyncExec(new Runnable() {
 				@Override
@@ -58,6 +77,7 @@ public class VideoView extends EditorPart implements BundleContextAware {
 			});
 		}
 	};
+	private Text txtName;
 	
 	/**
 	 * Create contents of the editor part.
@@ -67,14 +87,27 @@ public class VideoView extends EditorPart implements BundleContextAware {
 	public void createPartControl(Composite parent) {
 		
 		Composite rootComposite = new Composite(parent, SWT.NONE);
-		GridLayout gl_rootComposite = new GridLayout(1, false);
+		GridLayout gl_rootComposite = new GridLayout(3, false);
 		gl_rootComposite.marginHeight = 0;
 		gl_rootComposite.marginWidth = 0;
 		rootComposite.setLayout(gl_rootComposite);
 		
+		txtName = new Text(rootComposite, SWT.BORDER);
+		txtName.setText("Name");
+		GridData gd_txtName = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_txtName.widthHint = 104;
+		txtName.setLayoutData(gd_txtName);
+		
+		Button btnStartProducer = new Button(rootComposite, SWT.NONE);
+		btnStartProducer.setText("Start producer");
+		
 		ToolBar toolBar = new ToolBar(rootComposite, SWT.FLAT | SWT.RIGHT);
-		toolBar.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		GridData gd_toolBar = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gd_toolBar.widthHint = 196;
+		toolBar.setLayoutData(gd_toolBar);
 		toolBar.setBounds(0, 0, 297, 474);
+		
+		ToolItem toolItem = new ToolItem(toolBar, SWT.SEPARATOR);
 		
 		final ToolItem tltmOriginal = new ToolItem(toolBar, SWT.RADIO);
 		tltmOriginal.addSelectionListener(new SelectionAdapter() {
@@ -103,6 +136,12 @@ public class VideoView extends EditorPart implements BundleContextAware {
 			}
 		});
 		tltmScale.setText("Scale");
+		
+		ListViewer listViewer = new ListViewer(rootComposite, SWT.BORDER | SWT.V_SCROLL);
+		List list = listViewer.getList();
+		GridData gd_list = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
+		gd_list.widthHint = 3;
+		list.setLayoutData(gd_list);
 		
 		Composite composite = new Composite(rootComposite, SWT.EMBEDDED);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

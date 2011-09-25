@@ -78,6 +78,40 @@
                </with>
             </visibleWhen>
          </command>
+         <command
+               commandId="OpenSnapshot.command"
+               label="Open snapshot"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false">
+                     <instanceof
+                           value="hr.drezga.diplomski.video.core.IVideoProducer">
+                     </instanceof>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="OpenVideoFilter.command"
+               label="Open video filter"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false">
+                     <instanceof
+                           value="hr.drezga.diplomski.video.core.IVideoProducer">
+                     </instanceof>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
    </extension>
    <extension
@@ -87,6 +121,16 @@
             id="Video.view"
             name="VideoView">
       </editor>
+      <editor
+            class="org.eclipse.springframework.util.SpringExtensionFactory"
+            id="Snapshot.view"
+            name="SnapshotView">
+      </editor>
+      <editor
+            class="org.eclipse.springframework.util.SpringExtensionFactory"
+            id="VideoFilter.view"
+            name="VideoFilterView">
+      </editor>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -94,12 +138,16 @@
             defaultHandler="org.eclipse.springframework.util.SpringExtensionFactory"
             id="OpenVideo.command"
             name="OpenVideo">
-         <commandParameter
-               id="OpenVideo.command.element"
-               name="element"
-               optional="false"
-               values="org.eclipse.ui.internal.registry.ViewParameterValues">
-         </commandParameter>
+      </command>
+      <command
+            defaultHandler="org.eclipse.springframework.util.SpringExtensionFactory"
+            id="OpenSnapshot.command"
+            name="OpenSnapshot">
+      </command>
+      <command
+            defaultHandler="org.eclipse.springframework.util.SpringExtensionFactory"
+            id="OpenVideoFilter.command"
+            name="OpenVideoFilter">
       </command>
    </extension>
 
