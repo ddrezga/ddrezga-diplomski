@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -19,9 +20,13 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.springframework.osgi.context.BundleContextAware;
 import org.springframework.osgi.service.importer.ServiceReferenceProxy;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.DragSourceListener;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 
 public class FilterView extends ViewPart implements BundleContextAware{
 	public FilterView() {
@@ -35,6 +40,24 @@ public class FilterView extends ViewPart implements BundleContextAware{
 	ListViewer listViewer;
 	org.eclipse.swt.widgets.List list;
 
+	DragSourceListener dragsource = new DragSourceListener() {
+		
+		@Override
+		public void dragStart(DragSourceEvent event) {
+			System.out.println(event);
+		}
+		
+		@Override
+		public void dragSetData(DragSourceEvent event) {
+			event.data = ((IVideoFilter)((IStructuredSelection)listViewer.getSelection()).getFirstElement()).getId();
+		}
+		
+		@Override
+		public void dragFinished(DragSourceEvent event) {
+			System.out.println(event);
+		}
+	};
+	
 	@Override
 	public void createPartControl(Composite parent) {
 		d = getSite().getShell().getDisplay();
@@ -47,6 +70,9 @@ public class FilterView extends ViewPart implements BundleContextAware{
 		
 		listViewer.setLabelProvider(new ViewerLabelProvider());
 		listViewer.setContentProvider(new ContentProvider());
+		int operations = DND.DROP_COPY | DND.DROP_MOVE;
+		Transfer[] transferTypes = new Transfer[]{TextTransfer.getInstance()};
+		listViewer.addDragSupport(operations, transferTypes , dragsource);
 		
 		setFocus();
 	}

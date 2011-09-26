@@ -43,6 +43,7 @@ public class VideoDispatcherDefaultImpl implements IVideoDispatcher, BundleConte
 						long t = new Date().getTime();
 						for (IVideoHandler h : handlerMap.get(camera))
 							h.proccessFrame(img, t);
+						this.notify();
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -73,7 +74,12 @@ public class VideoDispatcherDefaultImpl implements IVideoDispatcher, BundleConte
 			Graphics g = img.getGraphics();
 			g.drawString(DateFormat.getTimeInstance(DateFormat.LONG).format(new Date()), 10, 10);
 			dr.setImg(img);
-			dr.notify();			
+			dr.notify();
+			try {
+				dr.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
