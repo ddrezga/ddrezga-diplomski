@@ -41,7 +41,7 @@ public class VideoDispatcherDefaultImpl implements IVideoDispatcher, BundleConte
 						for (IVideoHandler h : handlerMap.get(camera))
 							h.proccessFrame(img, t);
 					}
-				} catch (InterruptedException e) {}
+				} catch (Exception e) {}
 			}
 		}
 

@@ -3,6 +3,7 @@ package hr.drezga.diplomski.filteri;
 import java.awt.image.BufferedImage;
 
 import com.jhlabs.image.AbstractBufferedImageOp;
+import com.jhlabs.image.ImageUtils;
 import com.jhlabs.image.WholeImageFilter;
 
 import hr.drezga.diplomski.video.core.IVideoFilter;

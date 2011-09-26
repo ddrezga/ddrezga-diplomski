@@ -25,7 +25,7 @@
 	</bean>
 	<osgi:service id="grayScaleFilterService" interface="hr.drezga.diplomski.video.core.IVideoFilter" ref="grayScaleFilter">
 		<osgi:service-properties>
-			<entry key="name" value="GrayScaleFilter"/>
+			<entry key="name" value="GrayscaleFilter"/>
 		</osgi:service-properties>
 	</osgi:service>
 
@@ -38,18 +38,6 @@
 	<osgi:service id="mirrorFilterService" interface="hr.drezga.diplomski.video.core.IVideoFilter" ref="mirrorFilter">
 		<osgi:service-properties>
 			<entry key="name" value="MirrorFilter"/>
-		</osgi:service-properties>
-	</osgi:service>
-
-	<bean id="colorHalfToneFilter" class="hr.drezga.diplomski.filteri.GenericFilter">
-		<property name="filter">
-			<bean class="com.jhlabs.image.HalftoneFilter">
-			</bean>
-		</property>
-	</bean>
-	<osgi:service id="colorHalfToneFilterService" interface="hr.drezga.diplomski.video.core.IVideoFilter" ref="colorHalfToneFilter">
-		<osgi:service-properties>
-			<entry key="name" value="ColorHalfToneFilter"/>
 		</osgi:service-properties>
 	</osgi:service>
 
@@ -85,7 +73,45 @@
 	</bean>
 	<osgi:service id="edgeFilterService" interface="hr.drezga.diplomski.video.core.IVideoFilter" ref="edgeFilter">
 		<osgi:service-properties>
-			<entry key="name" value="edgeFilter"/>
+			<entry key="name" value="EdgeFilter"/>
 		</osgi:service-properties>
 	</osgi:service>
+
+	<bean id="raysFilter" class="hr.drezga.diplomski.filteri.GenericFilter">
+		<property name="filter">
+			<bean class="com.jhlabs.image.RaysFilter">
+				<property name="distance" value="50" />
+			</bean>
+		</property>
+	</bean>
+	<osgi:service id="raysFilterService" interface="hr.drezga.diplomski.video.core.IVideoFilter" ref="raysFilter">
+		<osgi:service-properties>
+			<entry key="name" value="RaysFilter"/>
+		</osgi:service-properties>
+	</osgi:service>
+
+	<bean id="crystalizeFilter" class="hr.drezga.diplomski.filteri.GenericFilter">
+		<property name="filter">
+			<bean class="com.jhlabs.image.CrystallizeFilter">
+			</bean>
+		</property>
+	</bean>
+	<osgi:service id="crystalizeFilterService" interface="hr.drezga.diplomski.video.core.IVideoFilter" ref="crystalizeFilter">
+		<osgi:service-properties>
+			<entry key="name" value="CrystallizeFilter"/>
+		</osgi:service-properties>
+	</osgi:service>
+
+	<bean id="chromeFilter" class="hr.drezga.diplomski.filteri.GenericFilter">
+		<property name="filter">
+			<bean class="com.jhlabs.image.ChromeFilter">
+			</bean>
+		</property>
+	</bean>
+	<osgi:service id="chromeFilterService" interface="hr.drezga.diplomski.video.core.IVideoFilter" ref="chromeFilter">
+		<osgi:service-properties>
+			<entry key="name" value="ChromeFilter"/>
+		</osgi:service-properties>
+	</osgi:service>
+
 </beans>
