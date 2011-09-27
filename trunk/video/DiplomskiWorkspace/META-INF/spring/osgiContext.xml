@@ -9,8 +9,4 @@
       	<osgi:listener ref ="Producers.view" bind-method="onBindProducer" unbind-method="onUnbindProducer" />
     </osgi:list> 
 
-    <osgi:list id="filterList" interface="hr.drezga.diplomski.video.core.IVideoFilter" cardinality="0..N">    
-      	<osgi:listener ref ="Filters.view" bind-method="onBindFilter" unbind-method="onUnbindFilter" />
-    </osgi:list> 
-
 </beans>
