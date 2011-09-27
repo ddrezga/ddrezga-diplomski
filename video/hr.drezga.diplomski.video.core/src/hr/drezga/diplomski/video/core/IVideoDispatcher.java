@@ -5,5 +5,4 @@ import java.util.List;
 
 public interface IVideoDispatcher {
 	public void dispatch(BufferedImage img, String camera);
-	public List<String> getProducerList();
 }
