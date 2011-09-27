@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Diplomski" uid="Diplomski" id="DiplomskiWorkspace.diplomski" application="Diplomski.application" version="1.0" useFeatures="true" includeLaunchers="true">
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>-console -consoleLog</programArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+   </launcherArgs>
+
+   <launcher name="diplomski">
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="hr.drezga.diplomski.core" version="1.0.0.qualifier"/>
+   </features>
+
+   <configurations>
+      <plugin id="DiplomskiWorkspace" autoStart="true" startLevel="4" />
+      <plugin id="hr.drezga.diplomski.video.DSCamera" autoStart="true" startLevel="4" />
+      <plugin id="hr.drezga.diplomski.video.core" autoStart="true" startLevel="4" />
+      <plugin id="hr.drezga.diplomski.video.dispatcher" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.p2.console" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.springframework.util" autoStart="true" startLevel="4" />
+      <plugin id="org.springframework.osgi.extender" autoStart="true" startLevel="4" />
+   </configurations>
+
+</product>
