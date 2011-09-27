@@ -93,6 +93,7 @@
 	<bean id="crystalizeFilter" class="hr.drezga.diplomski.filteri.GenericFilter">
 		<property name="filter">
 			<bean class="com.jhlabs.image.CrystallizeFilter">
+				<property name="scale" value="10" />
 			</bean>
 		</property>
 	</bean>
