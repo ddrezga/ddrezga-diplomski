@@ -154,8 +154,4 @@ public class VideoDispatcherDefaultImpl implements IVideoDispatcher, BundleConte
 		p.setDispatcher(null);
 	}
 	
-	@Override
-	public List<String> getProducerList() {
-		return new ArrayList<String>(producerMap.keySet());
-	}
 }
