@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -69,7 +71,10 @@ public class VideoFilterView extends EditorPart implements BundleContextAware, I
 	private java.util.List<IVideoFilter> filters = new ArrayList<IVideoFilter>();
 	ListViewer listViewer;
 	Button btnStartProducer;
+	boolean producerStarted;
 	IVideoDispatcher dispatcher = null;
+	ExecutorService exec = Executors.newCachedThreadPool();
+	private String producerName;
 	
 	IVideoHandler videoHandler = new IVideoHandler() {
 		@Override
@@ -78,19 +83,24 @@ public class VideoFilterView extends EditorPart implements BundleContextAware, I
 				return;
 //			img = i;
 			img = ImageUtils.cloneImage(i);
+			for (IVideoFilter filter : filters) {
+				if (filter != null) {
+					img = filter.filter(img);
+				}
+			}
 			getEditorSite().getWorkbenchWindow().getShell().getDisplay().syncExec(new Runnable() {
 				@Override
 				public void run() {
-					for (IVideoFilter filter : filters) {
-						if (filter != null) {
-							img = filter.filter(img);
-						}
-					}
 					panel.repaint();
-					if (dispatcher != null && btnStartProducer.getSelection())
-						dispatcher.dispatch(img, txtName.getText());
 				}
 			});
+			if (dispatcher != null && producerStarted)
+				exec.execute(new Runnable() {
+					@Override
+					public void run() {
+						dispatcher.dispatch(img, producerName);
+					}
+				});
 		}
 	};
 	private Text txtName;
@@ -172,6 +182,8 @@ public class VideoFilterView extends EditorPart implements BundleContextAware, I
 					Dictionary<String, String> props = new Hashtable<String, String>();
 					props.put("camera", txtName.getText());
 					vp = bc.registerService(IVideoProducer.class, ref, props);
+					producerStarted = btnStartProducer.getSelection();
+					producerName = txtName.getText();
 				} else {
 					vp.unregister();
 				}
