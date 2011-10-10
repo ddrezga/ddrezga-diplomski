@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/hr.drezga.diplomski.camera_1.0.0.201109280043.jar" id="hr.drezga.diplomski.camera" version="1.0.0.201109280043"/>
-   <feature url="features/hr.drezga.diplomski.filters_1.0.0.201109280043.jar" id="hr.drezga.diplomski.filters" version="1.0.0.201109280043"/>
-   <feature url="features/hr.drezga.diplomski.snapshot_1.0.0.201109280043.jar" id="hr.drezga.diplomski.snapshot" version="1.0.0.201109280043"/>
-   <feature url="features/hr.diplomski.video.anotherdispatch_1.0.0.201109280043.jar" id="hr.diplomski.video.anotherdispatch" version="1.0.0.201109280043"/>
+   <feature url="features/hr.drezga.diplomski.camera_1.0.0.201110042023.jar" id="hr.drezga.diplomski.camera" version="1.0.0.201110042023"/>
+   <feature url="features/hr.drezga.diplomski.filters_1.0.0.201110042023.jar" id="hr.drezga.diplomski.filters" version="1.0.0.201110042023"/>
+   <feature url="features/hr.drezga.diplomski.snapshot_1.0.0.201110042023.jar" id="hr.drezga.diplomski.snapshot" version="1.0.0.201110042023"/>
+   <feature url="features/hr.diplomski.video.anotherdispatch_1.0.0.201110042023.jar" id="hr.diplomski.video.anotherdispatch" version="1.0.0.201110042023"/>
 </site>
